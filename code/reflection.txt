@@ -1,6 +1,3 @@
-Write your reflection here.
+The transform.py functions built on each other in a way that made sense once I got going. clean_currency and clean_quantity strip out junk characters and try to convert the value, returning 0.0 instead of crashing which is coercion, turning a messy value into something usable instead of letting it crash the whole ETL pipeline. clean_sales_data reuses both of those instead of redoing the string cleaning itself. I used summarize_by_item and summarize_by_day very similarly to not repeat myself, since they turned out to be almost the same function after seeing the pattern. both are a group by using a dictionary, keyed by whatever column you're grouping on.
 
-See reflection.md for what makes a good reflection — be specific, use the
-terminology from this assignment (package, module, ETL, coercion, public API,
-relative import, accumulator, group by, unit vs. integration test), and make it
-actionable.
+I understand what a package's public API is now. A module is just one file inside the package, and __init__.py is like a table of contents that only exposes what a report actually needs using relative imports. I actually broke this during the process by importing find_top_entry into __init__.py but forgot to list it in __all__, which caused a unit test to fail, not an integration test, since it was checking the package's structure directly rather than running a whole report. With the help of AI I was able to fix this, and it taught me those two lists have to match exactly. Next time I want to check __all__ and my imports myself before running the tests, instead of relying on the test to catch the mismatch for me.
